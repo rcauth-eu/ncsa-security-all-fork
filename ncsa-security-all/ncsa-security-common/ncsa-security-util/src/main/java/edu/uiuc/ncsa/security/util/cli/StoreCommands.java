@@ -86,11 +86,17 @@ public abstract class StoreCommands extends CommonCommands {
         }
         Identifiable identifiable = findItem(inputLine);
         if (identifiable != null) {
-            update(identifiable);
-            getStore().save(identifiable);
+            // Note that the contract should be that a clone is passed in and that is saved if the user
+            // decides to.
+            Identifiable identifiable1 = identifiable.clone();
+            if (update(identifiable1)) {
+                getStore().save(identifiable1);
+            }
             return;
         }
+
         say("no object with that index or id found. Please try again");
+
     }
 
     /**
@@ -99,8 +105,9 @@ public abstract class StoreCommands extends CommonCommands {
      * are not garbage.
      *
      * @param identifiable
+     * @return returns true if the passed object needs to be saved, false otherwise.
      */
-    public abstract void update(Identifiable identifiable);
+    public abstract boolean update(Identifiable identifiable);
 
     /**
      * This is a hook for extensions so they don't have to completely
@@ -307,7 +314,7 @@ public abstract class StoreCommands extends CommonCommands {
             Identifier id = BasicIdentifier.newID(arg);
             return (Identifiable) getStore().get(id);
         }
-        int choice = inputLine.getIntArg(inputLine.size()-1);
+        int choice = inputLine.getIntArg(inputLine.size() - 1);
         if (allEntries == null || allEntries.isEmpty()) {
             loadAllEntries(); // just in case...
         }

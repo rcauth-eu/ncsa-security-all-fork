@@ -10,7 +10,12 @@ import static edu.uiuc.ncsa.security.core.util.BeanUtils.checkBasic;
  * <p>Created by Jeff Gaynor<br>
  * on 4/5/12 at  10:12 AM
  */
-public class IdentifiableImpl implements Identifiable {
+public class IdentifiableImpl implements Identifiable, Cloneable {
+    @Override
+    public IdentifiableImpl clone() {
+        return new IdentifiableImpl(getIdentifier());
+    }
+
     public IdentifiableImpl(Identifier identifier) {
         this.identifier = identifier;
     }

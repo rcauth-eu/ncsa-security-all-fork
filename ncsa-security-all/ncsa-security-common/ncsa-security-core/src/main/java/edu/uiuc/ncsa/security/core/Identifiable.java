@@ -7,7 +7,9 @@ import java.io.Serializable;
  * <p>Created by Jeff Gaynor<br>
  * on May 24, 2011 at  3:43:41 PM
  */
-public interface Identifiable extends Serializable {
+public interface Identifiable extends Serializable, Cloneable {
+
+            public Identifiable clone();
     /**
      * Get the identifer
      * @return

@@ -1,6 +1,8 @@
 package edu.uiuc.ncsa.security.core.ipc;
 
 
+import edu.uiuc.ncsa.security.core.Identifiable;
+
 /**
  * An bean for Inter-Process Communication. This lets the various threads and servlets track information so that
  * exceptions can be propagated between them, This tracks pending transactions that are
@@ -25,6 +27,7 @@ public abstract class IPCBean implements Runnable, IPCEventListener {
 
     /**
      * Sets this thread to stop the next time it wakes up.
+     *
      * @param stopThread
      */
     public void setStopThread(boolean stopThread) {
@@ -84,4 +87,13 @@ public abstract class IPCBean implements Runnable, IPCEventListener {
     }
 
     int status = STATUS_NOT_STARTED;
+
+    /**
+     * This should never be cloned in practice.
+     * @return
+     */
+    @Override
+    public Identifiable clone() {
+        return null;
+    }
 }

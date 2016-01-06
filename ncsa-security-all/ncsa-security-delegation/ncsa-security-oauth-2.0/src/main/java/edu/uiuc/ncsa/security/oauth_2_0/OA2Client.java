@@ -12,6 +12,21 @@ import java.util.Collection;
  * on 3/14/14 at  11:04 AM
  */
 public class OA2Client extends Client {
+    @Override
+    public OA2Client clone() {
+        OA2Client client = new OA2Client(getIdentifier());
+        client.setName(getName());
+        client.setHomeUri(getHomeUri());
+        client.setErrorUri(getErrorUri());
+        client.setEmail(getEmail());
+        client.setProxyLimited(isProxyLimited());
+        client.setRtLifetime(getRtLifetime());
+        client.setCallbackURIs(getCallbackURIs());
+        client.setCreationTS(getCreationTS());
+        client.setSecret(getSecret());
+        return client;
+    }
+
     public OA2Client(Identifier identifier) {
         super(identifier);
     }
