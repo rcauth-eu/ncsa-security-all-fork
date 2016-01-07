@@ -15,6 +15,20 @@ import static edu.uiuc.ncsa.security.core.util.BeanUtils.checkEquals;
 
 public class OAClient extends Client {
 
+    @Override
+    public OAClient clone()  {
+        OAClient client = new OAClient(getIdentifier());
+        client.setSecret(getSecret());
+        client.setProxyLimited(isProxyLimited());
+        client.setName(getName());
+        client.setHomeUri(getHomeUri());
+        client.setErrorUri(getErrorUri());
+        client.setEmail(getEmail());
+        client.setSignatureMethod(getSignatureMethod());
+        client.setCreationTS(getCreationTS());
+        return client;
+    }
+
     public OAClient(Identifier identifier) {
         super(identifier);
     }

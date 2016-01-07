@@ -17,6 +17,19 @@ import static edu.uiuc.ncsa.security.core.util.BeanUtils.checkEquals;
 
 
 public class Client extends IdentifiableImpl {
+    @Override
+    public Client clone() {
+        Client c = new Client(getIdentifier());
+        c.setCreationTS(getCreationTS());
+        c.setEmail(getEmail());
+        c.setErrorUri(getErrorUri());
+        c.setHomeUri(getHomeUri());
+        c.setName(getName());
+        c.setProxyLimited(isProxyLimited());
+        c.setSecret(getSecret());
+        return c;
+    }
+
     public boolean isProxyLimited() {
         return proxyLimited;
     }
