@@ -129,7 +129,7 @@ public abstract class AbstractServlet extends HttpServlet implements Logable {
     public ExceptionHandler getExceptionHandler() {
         if (exceptionHandler == null) {
             warn("Warning: no Exception Handler set, using basic exception handling only!");
-            exceptionHandler = new BasicExceptionHandler();
+            exceptionHandler = new BasicExceptionHandler(getMyLogger());
         }
         return exceptionHandler;
     }

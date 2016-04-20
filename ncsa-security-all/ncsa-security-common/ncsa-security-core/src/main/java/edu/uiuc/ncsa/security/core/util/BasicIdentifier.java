@@ -49,9 +49,10 @@ public class BasicIdentifier implements Identifier {
      * Create a random id. Never use random IDs in for things that grant security access, since these
      * are random which does not imply they are unguessable. Random IDs are useful for internal identifiers
      * (such as for objects) or for testing.
+     *
      * @return
      */
-    public static Identifier randomID(){
+    public static Identifier randomID() {
         return newID("urn:id:" + UUID.randomUUID());
     }
 

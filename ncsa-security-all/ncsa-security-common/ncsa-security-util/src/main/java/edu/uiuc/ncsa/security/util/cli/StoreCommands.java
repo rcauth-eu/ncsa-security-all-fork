@@ -91,6 +91,7 @@ public abstract class StoreCommands extends CommonCommands {
             Identifiable identifiable1 = identifiable.clone();
             if (update(identifiable1)) {
                 getStore().save(identifiable1);
+                clearEntries(); // CIL-240: Remove entries so the updated item is displayed.
             }
             return;
         }

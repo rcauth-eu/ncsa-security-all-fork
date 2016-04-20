@@ -1,5 +1,7 @@
 package edu.uiuc.ncsa.security.servlet;
 
+import edu.uiuc.ncsa.security.core.util.MyLoggingFacade;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,6 +12,8 @@ import java.io.IOException;
  * on 2/6/15 at  4:29 PM
  */
 public interface ExceptionHandler {
+
+    public MyLoggingFacade getLogger();
     /**
      * This has to throw these two exceptions for servlets.
      * @param t
