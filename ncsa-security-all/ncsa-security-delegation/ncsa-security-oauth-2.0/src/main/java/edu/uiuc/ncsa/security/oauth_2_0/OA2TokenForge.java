@@ -9,6 +9,9 @@ import edu.uiuc.ncsa.security.delegation.token.impl.AccessTokenImpl;
 import edu.uiuc.ncsa.security.delegation.token.impl.AuthorizationGrantImpl;
 import edu.uiuc.ncsa.security.delegation.token.impl.VerifierImpl;
 
+import edu.uiuc.ncsa.security.oauth_2_0.OA2GeneralError;
+import org.apache.http.HttpStatus;
+
 import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.util.Map;
@@ -84,7 +87,9 @@ public class OA2TokenForge implements TokenForge {
         }
         String authCode = parameters.get(OA2Constants.AUTHORIZATION_CODE);
         if (authCode == null) {
-            throw new GeneralException("Error: missing authorization code");
+	    // Reusing MissingTokenException is perhaps not so nice, but
+	    // currently not a problem
+            throw new MissingTokenException("Error: missing authorization code");
         }
         return getAccessToken(authCode);
     }
@@ -102,6 +107,8 @@ public class OA2TokenForge implements TokenForge {
     public AuthorizationGrant getAuthorizationGrant(HttpServletRequest request) {
         try {
             return getAuthorizationGrant(OA2Utilities.getParameters(request));
+	} catch (MissingTokenException e)   {
+	    throw new OA2GeneralError(OA2Errors.INVALID_REQUEST, e.getMessage(), HttpStatus.SC_BAD_REQUEST);
         } catch (Exception e) {
             throw new GeneralException("Error: could not create the authorization grant", e);
         }
@@ -122,6 +129,8 @@ public class OA2TokenForge implements TokenForge {
     public AccessToken getAccessToken(HttpServletRequest request) {
         try {
             return getAccessToken(OA2Utilities.getParameters(request));
+	} catch (MissingTokenException e)   {
+	    throw new OA2GeneralError(OA2Errors.INVALID_REQUEST, e.getMessage(), HttpStatus.SC_BAD_REQUEST);
         } catch (Exception e) {
             throw new GeneralException("Could not create a token", e);
         }
